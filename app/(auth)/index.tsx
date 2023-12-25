@@ -1,24 +1,21 @@
 import {
-  Button,
   FlatList,
   Image,
-  Pressable,
   SafeAreaView,
   StyleSheet,
 } from "react-native";
 import { Dimensions } from "react-native";
 
 import { Text, View } from "../../components/Themed";
-import { Link } from "expo-router";
-import Colors from "../../constants/colors";
 import { onboardingSteps } from "../../constants";
-import { OnboardingSliderContent } from "../../components/auth";
+import { OnboardingPagingDots, OnboardingSliderContent } from "../../components/auth";
 import { useRef, useState } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function OnboardingScreen() {
   const currentIndex = useRef(0);
+  const [pagingIndex, setPagingIndex] = useState(0);
   const imageFlatList = useRef<FlatList>(null);
   const contentFlatList = useRef<FlatList>(null);
 
@@ -27,6 +24,7 @@ export default function OnboardingScreen() {
   const handleNextPress = () => {
     if (currentIndex.current < onboardingSteps.length - 1) {
       currentIndex.current += 1;
+      setPagingIndex(currentIndex.current);
       imageFlatList.current?.scrollToIndex({ index: currentIndex.current, animated: true });
       contentFlatList.current?.scrollToIndex({ index: currentIndex.current, animated: true });
 
@@ -38,7 +36,6 @@ export default function OnboardingScreen() {
   };
 
   // TODO: Allow sliding back to previous screen
-  // TODO: Add pagination dots
   // TODO: Remember users previous onboarding state
 
   return (
@@ -72,6 +69,8 @@ export default function OnboardingScreen() {
               </View>
             )}
           />
+
+          <OnboardingPagingDots activeIndex={pagingIndex} />
         </View>
 
         {/* Title and content */}
