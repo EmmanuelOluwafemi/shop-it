@@ -20,7 +20,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SoraBold: require('../assets/fonts/Sora-Bold.ttf'),
+    InterRegular: require('../assets/fonts/Inter-Regular.ttf'),
+    InterMedium: require('../assets/fonts/Inter-Medium.ttf'),
+    InterSemiBold: require('../assets/fonts/Inter-SemiBold.ttf'),
+    InterBold: require('../assets/fonts/Inter-Bold.ttf'),
     ...FontAwesome.font,
   });
 
@@ -48,8 +52,9 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

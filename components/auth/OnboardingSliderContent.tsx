@@ -3,6 +3,8 @@ import { Text, View } from "../Themed";
 import { Pressable, StyleSheet } from "react-native";
 import Colors from "../../constants/colors";
 import { Link, router } from "expo-router";
+import { setString } from "../../utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface OnboardingSliderContentProps {
   title: string;
@@ -15,6 +17,13 @@ export const OnboardingSliderContent = (
   props: OnboardingSliderContentProps
 ) => {
   const { title, description, onPress, isLast } = props;
+
+  function handlePress() {
+    // Todo: Find a way to use setString from utils.ts
+    AsyncStorage.setItem("isOnboarded", "true").then(() => {
+        onPress();
+    });
+  }
 
   return (
     <View style={styles.content}>
@@ -29,7 +38,7 @@ export const OnboardingSliderContent = (
           marginTop: 32,
         }}
         onPress={() => {
-            isLast ? router.push("/(auth)/register") : onPress()
+          isLast ? router.push("/auth/register") : handlePress();
         }}
       >
         <Text
@@ -46,7 +55,7 @@ export const OnboardingSliderContent = (
 
       <Text style={{ ...styles.description, paddingTop: 24 }}>
         Already have an account ?{" "}
-        <Link style={{ color: Colors.dark.text }} href="/(auth)/login">
+        <Link style={{ color: Colors.dark.text }} href="/auth/">
           Log In
         </Link>
       </Text>

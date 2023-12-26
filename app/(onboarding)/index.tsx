@@ -1,15 +1,14 @@
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { FlatList, Image, SafeAreaView, StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 
 import { Text, View } from "../../components/Themed";
 import { onboardingSteps } from "../../constants";
-import { OnboardingPagingDots, OnboardingSliderContent } from "../../components/auth";
+import {
+  OnboardingPagingDots,
+  OnboardingSliderContent,
+} from "../../components/auth";
 import { useRef, useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -25,8 +24,14 @@ export default function OnboardingScreen() {
     if (currentIndex.current < onboardingSteps.length - 1) {
       currentIndex.current += 1;
       setPagingIndex(currentIndex.current);
-      imageFlatList.current?.scrollToIndex({ index: currentIndex.current, animated: true });
-      contentFlatList.current?.scrollToIndex({ index: currentIndex.current, animated: true });
+      imageFlatList.current?.scrollToIndex({
+        index: currentIndex.current,
+        animated: true,
+      });
+      contentFlatList.current?.scrollToIndex({
+        index: currentIndex.current,
+        animated: true,
+      });
 
       // check if last item
       if (currentIndex.current === onboardingSteps.length - 1) {
@@ -97,6 +102,8 @@ export default function OnboardingScreen() {
           )}
         />
       </View>
+
+      <StatusBar translucent />
     </SafeAreaView>
   );
 }
